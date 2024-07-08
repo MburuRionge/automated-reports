@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" context="width=device-width", initial-scale="1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Report for {{reportDtStr}}</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- style>
@@ -22,19 +22,19 @@
                 padding: 0.25cm;
             }
         </style>
-        <script src="<https://cdn.plot.ly/plotly-2.26.0.min.js>" charset="UTF-8"></script>
+        <script src="https://cdn.plot.ly/plotly-2.26.0.min.js" charset="UTF-8"></script>
     </head>
 
     <body class="container">
         <img class="img-fluid" src="data:image/png;base64, {{logoImg}}" alt="logo"
-        style="float: left; width:50px; height:50px; margin-right: 0.5en;">
+        style="float: left; width:50px; height:50px; margin-right: 0.5em; margin-right: 2cm;">
         <div>
             <span>Daily sales report for {{reportDtStr}}</span><br>
             <span>Acme Inc.</span>
         </div>
         <hr>
         <div style="margin-top: 2cm;"></div>
-        <table class="table table-stripped table-bordered">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>S.No</th>
@@ -57,7 +57,7 @@
             </tbody>
         </table>
 
-        <h2>Top perfoming items</h2>
+        <h2>Top performing items</h2>
         <ul class="list-group">
             {% for item in topItemsRows %}
             <li class="list-group-item">{{item}}</li>
@@ -69,13 +69,12 @@
         <div id="revenueBarChart"></div>
         <script>
             var data = [{ x: [], y: [], type: 'bar' }];
-
             {% for item in salesTb1Rows %}
             data[0].x.push("{{ item.name }}");
             data[0].y.push({{ item.revenue }});
             {% endfor %}
 
-            plotly.newPlot('revenueBarChart', data);
+            Plotly.newPlot('revenueBarChart', data);
         </script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
