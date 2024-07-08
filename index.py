@@ -4,16 +4,14 @@ import datetime as dt
 import io
 import base64
 import matplotlib.pyplot as plt
+import requests
 
-#templateStr = """Hi, my name is {{name}},
-#I am {{age}} years old.
-#I live in {{city}}
-#"""
 
 # step 1 - create jinja template object from a string
 template = jinja2.Environment(
     loader=jinja2.FileSystemLoader("./templates"),
-    autoescape=jinja2.select_autoescape
+    #autoescape=jinja2.select_autoescape
+    autoescape=False
 ).get_template("sales_report.html")
 
 #step 2 - create data for report
@@ -30,7 +28,7 @@ topItems = [x["name"] for x in sorted(
     salesTb1Rows, key=lambda x: x["revenue"], reverse=True)][0:3]
 
 # create logo image from file
-with open("templates/logo.png", "rb") as f:
+with open("templates/Gold Luxury Initial Circle Logo.png", "rb") as f:
     logoImg = base64.b64encode(f.read()).decode()
     
 # GENERATE SALES BAR CHART
@@ -40,15 +38,17 @@ ax.bar([x["name"] for x in salesTb1Rows], [x["revenue"] for x in salesTb1Rows])
 fig.tight_layout()
 fig.savefig(plotImgBytes, format="jpg")
 plotImgBytes.seek(0)
-plotImgStr = base64.b64necode(plotImgBytes.read()).decode()
+plotImgStr = base64.b64encode(plotImgBytes.read()).decode()
 
 # data for injecting into jinja2 template
 context = {
     "reportDtStr": todayStr,
     "salesTb1Rows": salesTb1Rows,
     "topItemsRows": topItems,
-    "salesBarCharting": plotImgStr,
-    "logoImg": logoImg
+    # "salesBarCharting": plotImgStr,
+    "logoImg": logoImg,
+    # "bootstrapCss": requests.get("<https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css>").text,
+    # "bootstrapJs": requests.get("<https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js>").text
 }
 
 # step 3 - render data in jinja template
